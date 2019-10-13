@@ -22,3 +22,17 @@ systemctl start sshd
 Para parar un servicio
 systemctl stop sshd
 ~~~
+
+servicios de red del sistema: 
+!(C:\Users\Luis Alfonso\Desktop\ASIR\Servicios\1.jpg)
+
+### Journalctl
+Journalctl se encarga de manejar todos los mensajes producios por: El kernel,
+initrd, los servicios...etc. es decir, todos los mensajes tipo log que se 
+producen en el sistema cuando hay algún evento.  
+Si no se le pasa ningún parámetro adicional nos devolverá una amplia lista
+con los registros del sistema, aunque lo lógico es filtrar esos resultados en
+función de lo que necesitemos observar. Esas opciones son: 
+- -n, --lines=(lleva al número de línea deseado)
+- -r, --reverse (devuelve la entrada al revés)
+- -o, --output=[short|short-full|short-iso|short-precise|verbose|export|json|cat] (el formato de los mensajes)
