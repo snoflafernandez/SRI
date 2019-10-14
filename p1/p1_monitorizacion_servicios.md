@@ -24,7 +24,7 @@ systemctl stop sshd
 ~~~
 
 servicios de red del sistema:  
-![La imagen no carga](/imagenes/1.jpg)
+![La imagen no carga](../imagenes/1.jpg)
 
 ### Journalctl
 Journalctl se encarga de manejar todos los mensajes producios por: El kernel,
