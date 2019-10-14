@@ -9,8 +9,8 @@ Su sintáxis es muy sencilla pues se realiza de la siguiente manera:
 ~~~
 Para ver el estado de un servicio (ssh en este caso)
 systemctl status sshd 
- ~~~
- ~~~
+~~~
+~~~
 Para recargar un servicio
 systemctl reload sshd 
 ~~~
@@ -23,7 +23,7 @@ Para parar un servicio
 systemctl stop sshd
 ~~~
 
-servicios de red del sistema:  
+**Servicios de red del sistema**:  
 ![La imagen no carga](../imagenes/1.jpg)
 
 ### Journalctl
