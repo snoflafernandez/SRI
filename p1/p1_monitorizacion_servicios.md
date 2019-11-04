@@ -36,3 +36,32 @@ Para utilizar la herramienta es necesario instalar el paquete net-tools. Las opc
 ~~~
 netstat [-a] [-b] [-e] [-f] [-n] [-o] [-p Protocolo] [-r] [-s] [-t] [-x] [-y] [Intervalo]
 ~~~
+
+### SSH
+**Cambiar puerto SSH**  
+Para cambiar el puerto por el que escucha este servicio es necesario acceder a la terminal como superusuario y editar el archivo */etc/ssh/sshd_config*, buscar la línea "# Port 22" la cual se debe descomentar y cambiar por el puerto desado.  
+Una vez realizados los cambios es necesario guardar y reiniciar el servicio sshd:
+~~~
+systemctl restart sshd
+~~~  
+
+**Crear una lista blanca de usuarios permitidos**  
+Se puede crear una lista blanca de usuarios permitidos de dos maneras diferentes, una a traves de direcciones IP y otra a través de usuarios:
+1. IP  
+Para hacerlo a través de direcciones IP debemos modificar las iptables (cortafuegos del kernel de Linux). Debemos escribir los siguientes comandos:  
+~~~
+iptables -A INPUT -s [direccion IP] --dport [puerto SSH] -i eth0 -j ACCEPT  
+
+iptables -A OUTPUT -s [direccion IP] --dport [puerto SSH] -o eth0 -j ACCEPT 
+~~~
+2. Usuario  
+Para filtar por nombre de usuario en el archivo */etc/ssh/sshd_config* es necesario añadir el nombre de usuario permitido de la siguiente manera y después es necesario reiniciar el servicio.
+~~~
+AllowUsers [nombre_de_usuario]
+~~~
+
+**Permitir acceso a root solo con clave instalada en el servidor**  
+Dentro del archivo */etc/ssh/sshd_config* debemos buscar la directiva "PermitRootLogin", se encuentra en el apartado *# Authentication*. Una vez encontrada la línea es necesario sustituir la opcion que trae por defecto (prohibit-password) por la palabra "no" y descomentar la línea. Posteriormente es necesario reiniciar el servicio:
+~~~
+PermitRootLoging no
+~~~
