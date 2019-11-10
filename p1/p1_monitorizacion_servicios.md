@@ -85,5 +85,25 @@ Si por el contrario el acceso es exitoso se devuelven los siguientes mensajes:
 
 **Mostrar los ultimos 10 mensajes generados por le servicio sshd y, exportarlos en formato json.**
 ~~~
-journalctl -u ssh -n 10 > logs_ssh.json
+journalctl -u ssh -n 10 -o json> logs_ssh.json
+~~~
+
+**Configurar journalctl para hacer persistentes los registros, pero que no ocupen más de 100mb de espacio en disco**
+En primer lugar es necesario abrir el archivo de configuración de journalctl que se encuentra en la ubicacion */etc/systemd/journald.conf*.  
+En ese archivo hay que descomentar las lineas:  
+- Storage=auto
+- SystemMaxFiles=100  
+Posteriormente creamos el directorio */var/log/journal* y reiniciamos el servicio (se perderán todos los mensajes procedentes de esa sesión).
+
+**Mostrar los registros autorizados de acceso remoto de la últimos 5 usuarios.**
+Los registros de acceso remoto de los usuarios se enumeran desde 0 hasta el numero de usuarios que acceda remotamente. De esta manera si se utiliza el comando journalctl con el usuario que se quiere listar se podrá ver sus registros:
+~~~
+journalctl -t sshd -b[0,1,2,3,4...]
+~~~
+
+
+**Revisar los intentos con error de acceso generados por el servicio sshd en las últimas 24 horas.**
+Se utiliza la palabra clave *until* o la palabra *since* y se puede establecer la hora desde que lo quieres o el intervalo de tiempo atrás. Por ultimo se especifica que se buscan entradas que hayan devuelto un error:
+~~~
+journalctl -u ssh --until "24 hour ago" --priority=err
 ~~~
