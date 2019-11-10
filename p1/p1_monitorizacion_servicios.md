@@ -64,4 +64,26 @@ AllowUsers [nombre_de_usuario]
 Dentro del archivo */etc/ssh/sshd_config* debemos buscar la directiva "PermitRootLogin", se encuentra en el apartado *# Authentication*. Una vez encontrada la línea es necesario sustituir la opcion que trae por defecto (prohibit-password) por la palabra "no" y descomentar la línea. Posteriormente es necesario reiniciar el servicio:
 ~~~
 PermitRootLoging no
+~~~  
+
+**Activar el registro de logs para el servicio SSH**  
+A través de journalctl se pueden listar todos los logs del sistema y estos se pueden filtrar por servicios o programas: 
+~~~
+journalctl -u ssh
+~~~
+Al filtrarlos utitilizando el comando anterior se listan todos los logs emitidos por el sistema para el programa SSH.  
+
+**Probar conexión varias veces, con fallo y de manera exitosa**  
+Cuando se intenta acceder via SSH al sistema se producen dos mensajes de log, tanto si es con fallo como si es exitosa.  
+Si se produce un fallo al acceder via SSH devolverá los siguientes fallos:  
+- pam_unix(ssh:auth) authentication failure[...]rhost=*dirección cliente* user=*usuario*
+- Failed password for usuario from *dirección cliente*  
+  
+Si por el contrario el acceso es exitoso se devuelven los siguientes mensajes:  
+- Accepted password for usuario from *dirección cliente*
+- pam_unix(ssh:session): session opened for user usuario
+
+**Mostrar los ultimos 10 mensajes generados por le servicio sshd y, exportarlos en formato json.**
+~~~
+journalctl -u ssh -n 10 > logs_ssh.json
 ~~~
