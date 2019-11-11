@@ -1,0 +1,1 @@
+Hacer intro de lo que va la practica y los prerrequisitos
