@@ -52,7 +52,7 @@ chmod 755 /var/www
 
 3. Añadir los clientes al archivo */etc/exports* (tantas veces como clientes haya).
 ~~~
-/home/compartido    ip_cliente(rw,sync,no_subtree_cheeck)
+/home/compartido    ip_cliente(rw,sync,no_subtree_check)
 /var/www    ip_cliente(rw,sync,fsid=0,crossmnt,no_subtree_check,no_root_squash)
 ~~~
 
@@ -80,3 +80,56 @@ mount ip_servidor:/var/www /var/www
 ~~~
 
 4. Para comprobar que se ha creado correctamente se puede crear un archivo en ese directorio y ver que existe en cualquiera de las máquinas.
+
+### Contenedor Proxmox
+1. En primer lugar es necesario descargar una plantilla (están disponibles en la documentación de Proxmox download.proxmox.com/images/system) y guardarla en el directorio compartido.
+2. 
+3. Crear el contenedor con la imagen .tar.gz
+~~~
+pct create 100 /mnt/nfs/home/compartido/archivo.tar.gz -storage local-lvm --password contraseña
+~~~
+**Los siguientes pasos son opcionales ya que no es necesario iniciar la máquina**
+
+3. Iniciar la máquina y entrar en la consola:
+~~~
+pct start 100
+pct console 100
+~~~
+
+4. Apagar la máquina
+~~~
+Acceder a la máquina vía SSH (si se ha accedido a la consola).
+pct stop 100
+~~~
+
+### Crear cluster Proxmox, añadir nodo al cluster y migrar la máquina.
+1. Crear el cluster:
+~~~
+pvecm create CLUSTERNAME
+~~~
+
+2. Añadir nodo al cluster:
+~~~
+Acceder vía SSH a la segunda máquina.
+pvecm add IP_DE_UN_NODO_EXISTENTE
+~~~
+
+3. Listar nodos y ver estado del cluster:
+~~~
+Listar nodos
+pvecm node
+
+Estado del cluster
+pvecm status
+~~~
+
+4. Migrar máquina de un nodo a otro:
+~~~
+pct migrate id_maquina USUARIO_DE_OTRO_NODO
+~~~
+
+5. Comprobar que la máquina ha sido migrada:
+~~~
+Ejecutar el siguiente comando en ambos nodos y ver que no está en el primero y si en el segundo
+pct list
+~~~
