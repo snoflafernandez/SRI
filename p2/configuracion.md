@@ -79,4 +79,4 @@ mount ip_servidor:/home/compartido /mnt/nfs/home/compartido
 mount ip_servidor:/var/www /var/www
 ~~~
 
-1. Para comprobar que se ha creado correctamente se puede crear un archivo en ese directorio y ver que existe en cualquiera de las máquinas.
+4. Para comprobar que se ha creado correctamente se puede crear un archivo en ese directorio y ver que existe en cualquiera de las máquinas.
