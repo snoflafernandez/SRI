@@ -83,8 +83,8 @@ mount ip_servidor:/var/www /var/www
 
 ### Contenedor Proxmox
 1. En primer lugar es necesario descargar una plantilla (están disponibles en la documentación de Proxmox download.proxmox.com/images/system) y guardarla en el directorio compartido.
-2. 
-3. Crear el contenedor con la imagen .tar.gz
+   
+2. Crear el contenedor con la imagen .tar.gz
 ~~~
 pct create 100 /mnt/nfs/home/compartido/archivo.tar.gz -storage local-lvm --password contraseña
 ~~~
